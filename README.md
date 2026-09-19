@@ -30,7 +30,7 @@ The design goal: make access a provable function of the user's attributes, so it
 
 The automation authenticates as an application, not a user, so it can run unattended on a schedule. This required a dedicated app registration.
 
-![App registration for the automation identity](https://github.com/KevoT0/Entra-JML-Automation/blob/main/1.png)
+![App registration for the automation identity](https://github.com/KevoT0/JML-Lifecycle-Automation-in-Microsoft-Entra-ID/blob/main/01-app-registration-redacted.png)
 
 Permissions were granted following **least privilege** — only the Graph scopes each task needs, added incrementally as functionality was built, each with admin consent:
 
