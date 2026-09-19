@@ -34,7 +34,7 @@ The automation authenticates as an application, not a user, so it can run unatte
 
 Permissions were granted following **least privilege** — only the Graph scopes each task needs, added incrementally as functionality was built, each with admin consent:
 
-![Least-privilege API permissions](https://github.com/KevoT0/Entra-JML-Automation/blob/main/2.png)
+![Least-privilege API permissions](https://github.com/KevoT0/JML-Lifecycle-Automation-in-Microsoft-Entra-ID/blob/main/2.png)
 
 | Scope | Purpose |
 |---|---|
