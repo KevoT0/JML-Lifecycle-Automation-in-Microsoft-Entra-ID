@@ -46,7 +46,7 @@ Permissions were granted following **least privilege** — only the Graph scopes
 
 Authentication uses a client secret. The secret is stored in a local `config.json` and **excluded from source control** via `.gitignore` — it is never hardcoded in a script or committed.
 
-![Client secret used for app-only authentication](https://github.com/KevoT0/Entra-JML-Automation/blob/main/3.png)
+![Client secret used for app-only authentication](https://github.com/KevoT0/JML-Lifecycle-Automation-in-Microsoft-Entra-ID/blob/main/3.png)
 
 ---
 
@@ -54,7 +54,7 @@ Authentication uses a client secret. The secret is stored in a local `config.jso
 
 A fictional company was stood up entirely by script — three department security groups (Finance, Marketing, Engineering) and ten users, each stamped with a `department` attribute. The setup script is idempotent: it checks for existing objects before creating, so it can be re-run safely.
 
-![Lab setup and first provisioning run](https://github.com/KevoT0/Entra-JML-Automation/blob/main/4.png)
+![Lab setup and first provisioning run](https://github.com/KevoT0/JML-Lifecycle-Automation-in-Microsoft-Entra-ID/blob/main/4.png)
 
 ---
 
@@ -62,11 +62,11 @@ A fictional company was stood up entirely by script — three department securit
 
 A new hire is created with a `department` attribute set — the only input the automation needs.
 
-![New joiner created with a department attribute](https://github.com/KevoT0/Entra-JML-Automation/blob/main/5.png)
+![New joiner created with a department attribute](https://github.com/KevoT0/JML-Lifecycle-Automation-in-Microsoft-Entra-ID/blob/main/5.png)
 
 She appears in the directory with her department populated, ready to be provisioned on the next run.
 
-![New joiner in the directory roster](https://github.com/KevoT0/Entra-JML-Automation/blob/main/6.png)
+![New joiner in the directory roster](https://github.com/KevoT0/JML-Lifecycle-Automation-in-Microsoft-Entra-ID/blob/main/6.png)
 
 The provisioning engine is a single mapping — the department-to-group policy — applied to every user:
 
@@ -86,7 +86,7 @@ The engine reads each user's department, adds them to the matching group, and re
 
 The trigger is a single manual step: an analyst changes the user's `department` (here, Amara Okafor moves from Finance to Engineering).
 
-![Department changed as the mover trigger](https://github.com/KevoT0/Entra-JML-Automation/blob/main/7.png)
+![Department changed as the mover trigger](https://github.com/KevoT0/JML-Lifecycle-Automation-in-Microsoft-Entra-ID/blob/main/7.png)
 
 On the next run the script grants the new group **and strips the stale access automatically** — the line that kills privilege creep:
 
@@ -95,7 +95,7 @@ REMOVED Amara Okafor from Finance-Team (stale access)
 Placed  Amara Okafor (dept: Engineering) -> Engineering-Team
 ```
 
-![Mover run stripping stale access and granting the new group](https://github.com/KevoT0/Entra-JML-Automation/blob/main/8.png)
+![Mover run stripping stale access and granting the new group](https://github.com/KevoT0/JML-Lifecycle-Automation-in-Microsoft-Entra-ID/blob/main/8.png)
 
 Every other user is simply re-confirmed in place. The engine is idempotent — it only acts on drift — so it is safe to run on a schedule.
 
@@ -105,7 +105,7 @@ Every other user is simply re-confirmed in place. The engine is idempotent — i
 
 Leavers are flagged with a leave date (`EmployeeLeaveDateTime`), simulating what an HR feed would populate in production. The tagging is deliberately a human decision — a person confirms who is leaving and when — while the offboarding itself is fully automated.
 
-![Tagging leavers with a leave date](https://github.com/KevoT0/Entra-JML-Automation/blob/main/9.png)
+![Tagging leavers with a leave date](https://github.com/KevoT0/JML-Lifecycle-Automation-in-Microsoft-Entra-ID/blob/main/9.png)
 
 The `Leaver.ps1` engine is date-gated. It contains no names and no dates; it reads each user's leave date and compares it to now:
 
