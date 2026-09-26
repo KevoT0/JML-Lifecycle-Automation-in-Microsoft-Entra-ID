@@ -154,3 +154,9 @@ This is the core logic that IGA platforms such as SailPoint and Okta Lifecycle p
 · Privilege-creep remediation
 · Secure secret handling
 · Idempotent, schedulable automation
+
+
+## References
+ 
+1. TechCrunch — [Block confirms Cash App breach after former employee accessed US customer data](https://techcrunch.com/2022/04/05/block-cash-app-data-breach/) (April 2022).
+2. Security.org — [Cash App Data Breach: What Happened and What to Do](https://www.security.org/identity-theft/breach/cash-app/) (~8.2 million US customers affected).
