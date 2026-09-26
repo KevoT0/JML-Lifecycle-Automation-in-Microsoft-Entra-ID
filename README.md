@@ -6,23 +6,24 @@
 
 ---
 
-## Summary
-
-Manual identity lifecycle management fails in three predictable ways: joiners wait for access and get provisioned inconsistently, movers accumulate access they no longer need (privilege creep), and leavers keep live access after they have gone (orphaned accounts). I built an attribute-driven automation in PowerShell and Microsoft Graph that makes group access a function of a user's `department` attribute, and offboarding a function of their leave date. A human sets one attribute; the scripts derive and enforce the correct access across the whole tenant, unattended.
-
-**Result:** A working Joiner–Mover–Leaver engine that provisions new starters by department, reconciles movers by stripping stale access automatically, and offboards leavers on their due date — revoking sessions, removing all group access, and disabling the account.
-
----
-
-## The problem
-
-Access in Entra is granted through group membership. At small scale a human can assign groups by hand, but at scale that breaks down:
-
-- **Joiners** — new hires wait while an analyst manually assigns groups, and different analysts assign inconsistently.
-- **Movers** — when someone changes teams the new access is added, but the old access is rarely removed. Over time users hold access to teams they left years ago. Each stale permission is an attack path.
-- **Leavers** — departing accounts get disabled late or incompletely, leaving orphaned accounts with live access — the single highest identity risk.
-
-The design goal: make access a provable function of the user's attributes, so it stays correct continuously without a human holding the rules in their head.
+## The problem — a real-world attack, not a hypothetical
+ 
+In **April 2022, Block Inc.** (parent of **Cash App**) disclosed that a **former employee had downloaded internal reports containing the personal data of roughly 8.2 million current and former US customers** — brokerage account numbers, portfolio values, and holdings. The employee had legitimate access to those reports while employed. The failure: **that access was never fully revoked when they left**, and *months* after departure they could still pull the data. [1][2]
+ 
+This is the most preventable class of identity failure — the **orphaned account**, access that outlives the person's need for it. It shows up two ways: the **leaver** who keeps access after departure (Cash App), and the quieter **mover** who changes teams over the years and accumulates access to every team they ever passed through, none of it ever removed. Both leave standing access an attacker — or a departing insider — can walk straight through. Manual offboarding is where this breaks: at scale, humans forget, and every forgotten account is a breach waiting to happen.
+ 
+## What this project is — and the skills it proves
+ 
+This project builds the automation that closes that gap: an **attribute-driven Joiner–Mover–Leaver (JML) lifecycle engine** in Microsoft Entra ID, using PowerShell and Microsoft Graph. Access becomes a function of a user's attributes — granted automatically on joining, re-aligned on moving, and **stripped automatically, on the day, when they leave**. It demonstrates the identity-automation skills to make access provably match a person's *current* role at all times, unattended, at scale.
+ 
+| Real-world failure | Control this project builds |
+|---|---|
+| Ex-employee retains access after departure (Cash App) | Date-gated **Leaver** automation — revoke sessions, strip all groups, disable the account on the leave date |
+| Access piles up across role changes (privilege creep) | **Mover** reconciliation — add the new, strip the stale, automatically |
+| New starters provisioned inconsistently by hand | **Joiner** automation — access derived from the department attribute |
+| Offboarding depends on someone remembering | App-only automation runs unattended on a schedule — nothing to forget |
+ 
+This is the core logic that IGA platforms such as SailPoint and Okta Lifecycle productise — implemented directly against Graph to demonstrate the underlying mechanics.
 
 ---
 
